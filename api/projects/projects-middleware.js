@@ -17,15 +17,18 @@ async function validateProjectId(req, res, next) {
 }
 
 function validateProjectBody(req, res, next) {
-  const { name, description } = req.body;
+  const { name, description, completed } = req.body;
   if (!name || !name.trim()) {
     next({ status: 400, message: "missing required name" });
   } else if (!description || !description.trim()) {
     next({ status: 400, message: "missing required description" });
-  } else {
+  } else if (typeof completed !== 'boolean'){
+        next({ status: 400, message: "missing completion status" });
+    } else {
     next();
   }
 }
+
 
 
 module.exports = {

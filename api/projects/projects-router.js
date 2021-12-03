@@ -30,6 +30,22 @@ router.put("/:id",validateProjectId,validateProjectBody,(req, res, next) => {
           res.status(202).json(updatedPost);
         })
         .catch(next);
-    }
-  );
+});
+
+router.delete("/:id", validateProjectId, (req, res, next) => {
+    Projects.remove(req.params.id)
+        .then(() => {
+        res.status(204).json({});
+        })
+        .catch(next);
+});
+
+router.get("/:id/actions", validateProjectId, (req, res, next) => {
+    Projects.getProjectActions(req.params.id)
+      .then((actions) => {
+        res.status(202).json(actions);
+      })
+      .catch(next);
+  });
+
 module.exports = router
